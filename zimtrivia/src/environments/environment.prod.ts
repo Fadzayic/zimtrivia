@@ -7,6 +7,6 @@ export const environment = {
     projectId: "zimtrivia",
     storageBucket: "zimtrivia.appspot.com",
     messagingSenderId: "186683260969",
-    appId: "1:186683260969:web:1baa4b8bdb2aba67179c38",
+    appId: "1:186683260969:web:ceb841f9fcc41dab179c38"
   }
 };

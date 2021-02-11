@@ -1,0 +1,124 @@
+.header {
+    --background: #fff;
+    .light-text {
+      color: #fff;
+    }
+    .header-title {
+      font-size: 40px;
+      letter-spacing: 1rem;
+    }
+    
+  }
+  .logo{
+    width: 150px;
+    display: block;
+    height: auto;
+    margin: 10px auto;
+}
+ion-content {
+  width: 100vw;
+  position: absolute;
+  bottom: -40px;
+  -background: #000;
+
+  .heading {
+    position: relative;
+    top: 50%;
+    text-align: center;
+
+    .center{
+        margin: auto;
+    }
+  }
+}
+ion-content h1 {
+//   background-color: #E42256;
+  margin: -5px 0px 0px 0px;
+  padding: 0px;
+  color: #fff;
+  text-align: center;
+  font-size: 50px;
+  text-transform: uppercase
+}
+.animation {
+  background-color:#E12A2A;
+  height: 500px;
+}
+svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.wave {
+  animation: wave 3s linear;
+  animation-iteration-count: infinite;
+  fill: #E12A2A;
+  height: 500px;
+}
+.drop {
+  fill: #E12A2A;
+  xfill: #99000055;
+  animation: drop 3.2s linear infinite normal;
+  stroke: var(--col-deepblue);
+  stroke-width: 0.5;
+  transform: translateY(25px);
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.drop1 {
+}
+.drop2 {
+  animation-delay: 3s;
+  animation-duration: 3s;
+}
+.drop3 {
+  animation-delay: -2s;
+  animation-duration: 3.4s;
+}
+.drop4 {
+  animation-delay: 1.7s;
+}
+.drop5 {
+  animation-delay: 2.7s;
+  animation-duration: 3.1s;
+}
+.drop6 {
+  animation-delay: -2.1s;
+  animation-duration: 3.2s;
+}
+.gooeff {
+  filter: url(#goo);
+}
+#wave2 {
+  animation-duration: 5s;
+  animation-direction: reverse;
+  opacity: 0.6;
+  height: 500px;
+}
+#wave3 {
+  animation-duration: 7s;
+  opacity: 0.3;
+  height: 500px;
+}
+@keyframes drop {
+  0% {
+    transform: translateY(25px);
+  }
+  30% {
+    transform: translateY(-10px) scale(0.1);
+  }
+  30.001% {
+    transform: translateY(25px) scale(1);
+  }
+  70% {
+    transform: translateY(25px);
+  }
+  100% {
+    transform: translateY(-10px) scale(0.1);
+  }
+}
+@keyframes wave {
+  to {
+    transform: translateX(-100%);
+  }
+}

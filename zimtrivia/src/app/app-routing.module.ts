@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'rules',
+    loadChildren: () => import('./rules/rules.module').then( m => m.RulesPageModule)
+  },
+  {
+    path: 'terms',
+    loadChildren: () => import('./terms/terms.module').then( m => m.TermsPageModule)
+  },
+  {
+    path: 'time-out',
+    loadChildren: () => import('./time-out/time-out.module').then( m => m.TimeOutPageModule)
+  },
 ];
 
 @NgModule({

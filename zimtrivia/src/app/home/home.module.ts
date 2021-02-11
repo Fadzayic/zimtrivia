@@ -6,14 +6,21 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 
-
+import { AngularFireModule } from 'angularfire2';
+import { environment } from '../../environments/environment';
+import {
+  AngularFireDatabase,
+  AngularFireDatabaseModule } from 'angularfire2/database';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    AngularFireModule.initializeApp(environment.config),
+    AngularFireDatabaseModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [AngularFireDatabase]
 })
 export class HomePageModule {}
