@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.zimtrivia.zimtrivia;
 
 import android.os.Bundle;
 
