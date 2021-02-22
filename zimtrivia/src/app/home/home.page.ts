@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject} from "rxjs";
-import { Router } from "@angular/router";
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from "firebase/app";
+import * as firebase from 'firebase/app';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Card } from "../models/card";
+import { Card } from '../models/card';
 
 const circleR = 80;
 const circleDasharray = 2 * Math.PI * circleR;
@@ -16,18 +16,19 @@ export interface record {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  providers: [LocalStorageService]
+  providers: [LocalStorageService],
 })
 export class HomePage {
-
   doc: any;
   records: Card[] = [];
   localCardName: string = 'card';
   loading: boolean = true;
   message: string = 'Loading card...';
   timerStarted: boolean = false;
+  counterAnswers: number = 0;
+  noCards: boolean = false;
 
-  time: BehaviorSubject<string> = new BehaviorSubject("00:00");
+  time: BehaviorSubject<string> = new BehaviorSubject('00:00');
   percent: BehaviorSubject<number> = new BehaviorSubject(100);
 
   timer: number;
@@ -38,7 +39,6 @@ export class HomePage {
 
   circleR = circleR;
   circleDasharray = circleDasharray;
-
 
   constructor(
     private router: Router,
@@ -55,6 +55,10 @@ export class HomePage {
     this.message = 'Loading card...';
     this.timerStarted = false;
     this.countAnswers();
+    if (this.counterAnswers) {
+      this.noCards = true;
+    }
+    console.log('there are no cards: ', this.noCards);
   }
   ionViewWillLeave() {
     console.log('ionViewWillLeave event');
@@ -76,7 +80,7 @@ export class HomePage {
 
   stopTimer() {
     clearInterval(this.interval);
-    this.time.next("00:00");
+    this.time.next('00:00');
   }
 
   percentageOffset(percent) {
@@ -92,10 +96,10 @@ export class HomePage {
     let minutes: any = this.timer / 60;
     let seconds: any = this.timer % 60;
 
-    minutes = String("0" + Math.floor(minutes)).slice(-2);
-    seconds = String("0" + Math.floor(seconds)).slice(-2);
+    minutes = String('0' + Math.floor(minutes)).slice(-2);
+    seconds = String('0' + Math.floor(seconds)).slice(-2);
 
-    const text = minutes + ":" + seconds;
+    const text = minutes + ':' + seconds;
     this.time.next(text);
 
     const totalTime = this.startDuration * 35;
@@ -107,14 +111,17 @@ export class HomePage {
     if (this.timer < 0) {
       // this.startTimer(this.startDuration);
       this.stopTimer();
-      this.router.navigate(["/time-out"]);
+      this.router.navigate(['/time-out']);
     }
   }
 
   refresh(ev) {
     this.localStorageService.saveData(this.localCardName, this.records);
     setTimeout(() => {
-      console.log('locals ', this.localStorageService.getData(this.localCardName));
+      console.log(
+        'locals ',
+        this.localStorageService.getData(this.localCardName)
+      );
       ev.detail.complete();
       this.records = [];
       this.countAnswers();
@@ -125,7 +132,9 @@ export class HomePage {
     const min = 0;
     const max = maxItems;
     console.log('max ', max);
-    const floor = (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+    const floor = (
+      Math.floor(Math.random() * (max - min + 1)) + min
+    ).toString();
     if (floor.includes('.')) {
       return parseInt(floor.split('.')[0]);
     }
@@ -134,67 +143,88 @@ export class HomePage {
 
   public getAnswers(maxItems: number): any {
     const randomNumber = this.getRandomNumber(maxItems);
-    return new Promise(async (resolve)=>{
+    return new Promise(async (resolve) => {
       await firebase
-            .firestore()
-            .collection("/answers/")
-            .where("id","==" , randomNumber)
-            .limit(1)
-            .get()
-            .then((res)=>{
-              const localCard = this.localStorageService.getData(this.localCardName);
-              res.forEach(ref => {
-                const duplicate = this.records.find(s => s.id== ref.data().id);
-                if (typeof (duplicate) === "undefined") {
-                  if (localCard?.length > 0) {
-                    const duplicateLocal = localCard.find(s => s.id== ref.data().id);
-                    if (typeof (duplicateLocal) === "undefined") {
-                      console.log(`${randomNumber} does not Exist locally`);
-                      this.records.push(ref.data() as Card);
-                    } else {
-                      console.log(`${randomNumber} exists locally already`);
-                    }
-                  } else {
-                    console.log(`${randomNumber} does not Exist`);
-                    this.records.push(ref.data() as Card);
-                  }
+        .firestore()
+        .collection('/answers/')
+        .where('id', '==', randomNumber)
+        .limit(1)
+        .get()
+        .then((res) => {
+          const localCard = this.localStorageService.getData(
+            this.localCardName
+          );
+          res.forEach((ref) => {
+            const duplicate = this.records.find((s) => s.id === ref.data().id);
+            if (typeof duplicate === 'undefined') {
+              if (localCard?.length > 0) {
+                const duplicateLocal = localCard.find(
+                  (s) => s.id === ref.data().id
+                );
+                if (typeof duplicateLocal === 'undefined') {
+                  console.log(`${randomNumber} does not Exist locally`);
+                  this.records.push(ref.data() as Card);
                 } else {
-                  if (JSON.stringify(duplicate).length > 0) {
-                    console.log(`${randomNumber} exists already`);
-                  }
-                }
-              });
-              if (localCard?.length < maxItems) {
-                if (this.records.length < 5) {
-                  this.loading = true;
-                  this.getAnswers(maxItems);
-                } else if (this.records.length === 5) {
-                  this.loading = false;
-                  if (localCard?.length > 0) {
-                    let temporaryRecord: Card[];
-                    temporaryRecord = [...localCard, ...this.records];
-                    this.localStorageService.saveData(this.localCardName, temporaryRecord);
-                  } else {
-                    this.localStorageService.saveData(this.localCardName, this.records);
-                  }
+                  console.log(`${randomNumber} exists locally already`);
                 }
               } else {
-                this.message = 'No cards left...';
+                console.log(`${randomNumber} does not Exist`);
+                this.records.push(ref.data() as Card);
               }
-              resolve(this.records);
-      });
+            } else {
+              if (JSON.stringify(duplicate).length > 0) {
+                console.log(`${randomNumber} exists already`);
+              }
+            }
+          });
+          if (localCard?.length < maxItems) {
+            if (this.records.length < 5) {
+              this.loading = true;
+              this.getAnswers(maxItems);
+            } else if (this.records.length === 5) {
+              this.loading = false;
+              if (localCard?.length > 0) {
+                let temporaryRecord: Card[];
+                temporaryRecord = [...localCard, ...this.records];
+                this.localStorageService.saveData(
+                  this.localCardName,
+                  temporaryRecord
+                );
+              } else {
+                this.localStorageService.saveData(
+                  this.localCardName,
+                  this.records
+                );
+              }
+            }
+          } else {
+            this.message = 'No cards left...';
+            this.noCards = true;
+          }
+          resolve(this.records);
+        });
     });
+  }
+
+  public refreshGame(): any {
+    console.log('records:', this.records);
+    // const localCard = this.localStorageService.getData(this.localCardName);
+    if (this.records?.length <= 0) {
+      this.localStorageService.removeData(this.localCardName);
+      window.location.reload();
+    }
   }
 
   public countAnswers(): any {
-    return new Promise(async (resolve)=>{
+    return new Promise(async (resolve) => {
       await firebase
-            .firestore()
-            .collection("/answers/")
-            .get().then(snap => {
-              resolve(this.getAnswers(snap.size));
-            });
+        .firestore()
+        .collection('/answers/')
+        .get()
+        .then((snap) => {
+          // this.counterAnswers = snap.size;
+          resolve(this.getAnswers(snap.size));
+        });
     });
   }
-
 }

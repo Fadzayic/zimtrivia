@@ -76,6 +76,7 @@
     (click)="startTimer(startDuration)"
     >START</ion-button
   >
+  <ion-button *ngIf="noCards == true" expand="block" color="success" (click)="refreshGame()" >start a new game</ion-button>
 </ion-content>
 
 <ion-footer> </ion-footer>
