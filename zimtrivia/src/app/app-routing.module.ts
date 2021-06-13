@@ -7,8 +7,12 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
+    path: 'play',
+    loadChildren: () => import('./play/play.module').then( m => m.PlayPageModule)
+  },
+  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'play',
     pathMatch: 'full'
   },
   {
@@ -22,6 +26,10 @@ const routes: Routes = [
   {
     path: 'time-out',
     loadChildren: () => import('./time-out/time-out.module').then( m => m.TimeOutPageModule)
+  },
+  {
+    path: 'play',
+    loadChildren: () => import('./play/play.module').then( m => m.PlayPageModule)
   },
 ];
 
