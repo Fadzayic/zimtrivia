@@ -19,7 +19,7 @@
 
 .timer {
   position: relative;
-  top: -50px;
+  // top:z   -50px;
   left: 20%;
 }
 #progress-circle {
@@ -87,5 +87,8 @@ ion-list {
       }
   }
   
+  ion-content.background{
+    --background: url(../../assets/bg.jpg) 0 60px no-repeat;
+}
   
   

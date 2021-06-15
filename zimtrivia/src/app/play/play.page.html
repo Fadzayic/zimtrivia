@@ -8,8 +8,12 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="wrap">
-  <button class="play-button" [routerLink]="['/home']">Play</button>
-</div>
+<ion-content class="background">
+  <div class="wrap">
+    <button class="play-button" [routerLink]="['/home']">Play</button>
+  </div>
+</ion-content>
 
-<ion-button expand="block" color="warning" [routerLink]="['/rules']" >HOW TO PLAY</ion-button>
+<ion-button expand="block" color="success" [routerLink]="['/rules']"
+  >HOW TO PLAY</ion-button
+>
