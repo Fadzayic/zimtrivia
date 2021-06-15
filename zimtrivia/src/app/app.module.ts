@@ -28,7 +28,7 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireStorageModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SplashScreen],
   bootstrap: [AppComponent],
