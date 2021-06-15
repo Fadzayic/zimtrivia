@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <!-- <ion-title class="ion-text-center light-text header-title">TRIVIA</ion-title> -->
+    <img class="logo" src="../../assets/logo.jpg" />
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
+  <div class="wrap">
+    <button class="play-button" [routerLink]="['/home']">Play</button>
+  </div>
+</ion-content>
+
+<ion-button expand="block" color="success" [routerLink]="['/rules']"
+  >HOW TO PLAY</ion-button
+>

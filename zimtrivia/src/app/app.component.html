@@ -5,9 +5,9 @@
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content class="background">
       <ion-list>
-        <ion-item [routerLink]="['/']"  (click)="closeMenu()">Home</ion-item>
+        <ion-item [routerLink]="['/']"  (click)="closeMenu()">Play</ion-item>
         <ion-item [routerLink]="['/rules']"  (click)="closeMenu()">How to play</ion-item>
         <ion-item [routerLink]="['/terms']"  (click)="closeMenu()">Terms and conditions</ion-item>
         <ion-item href="https://zimtrivia.com/privacy-policy/"  (click)="closeMenu()">Privacy policy</ion-item>
