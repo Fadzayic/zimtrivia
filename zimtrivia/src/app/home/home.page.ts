@@ -73,9 +73,11 @@ export class HomePage {
     this.timerStarted = true;
     this.timer = duration * 35;
     this.updateTimeValue();
-    this.interval = setInterval(() => {
-      this.updateTimeValue();
-    }, 1000);
+    setTimeout(() => {
+      this.interval = setInterval(() => {
+        this.updateTimeValue();
+      }, 1000);
+ }, 2000);
   }
 
   stopTimer() {

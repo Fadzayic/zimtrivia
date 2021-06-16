@@ -15,14 +15,16 @@
 
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large"> It's not 30 Seconds </ion-title>
+      <ion-title size="large"> ZimTrivia </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div class="list-ul gradient-border">
+    <div *ngIf="!loading && timerStarted">
     <ion-list *ngFor="let item of records; let i = index">
       <div lines="none" class="ion-text-center list-items">{{item.answer}}</div>
     </ion-list>
+  </div>
   </div>
   <br />
 
@@ -69,7 +71,7 @@
   </ion-row>
   <h1 *ngIf="!!loading" class="ion-text-center">{{message}}</h1>
   <ion-button
-    *ngIf="!loading && !timerStarted"
+    
     expand="block"
     color="success"
     class="btn-teal"
