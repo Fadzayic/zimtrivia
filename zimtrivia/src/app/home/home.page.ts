@@ -27,6 +27,9 @@ export class HomePage {
   timerStarted: boolean = false;
   counterAnswers: number = 0;
   noCards: boolean = false;
+  score = 0;
+  timeup: boolean = false;
+  whenClicked = [false, false, false, false];
 
   time: BehaviorSubject<string> = new BehaviorSubject('00:00');
   percent: BehaviorSubject<number> = new BehaviorSubject(100);
@@ -114,6 +117,11 @@ export class HomePage {
       // this.startTimer(this.startDuration);
       this.stopTimer();
       this.router.navigate(['/time-out']);
+    }
+
+    if (this.timer < 5) {
+      this.timeup = true;
+      console.log('timer is less than 5');
     }
   }
 
@@ -229,4 +237,13 @@ export class HomePage {
         });
     });
   }
+
+  public addScore(): any {
+    this.score = this.score + 10;
+
+ }
+
+ tracked(item, index){
+  return index;
+}
 }

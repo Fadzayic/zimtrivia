@@ -35,6 +35,17 @@
   font-weight: 600;
   fill: #333;
 }
+.redtimer{
+  fill: #E12A2A;
+  animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 
 .my-custom-menu {
   --width: 500px;
@@ -48,9 +59,16 @@ ion-list {
     margin: 40px auto 0;
     width: 90%;
   .list-items {
-    padding: 5px 0;
+    padding: 15px 0;
     font-size: 18px;
     font-weight: bold;
+    border-bottom: 1px dotted #fff;
+  }
+  .clickeditem{
+    background: #469A49;
+    padding: 5px;
+    color: #fff;
+    
   }
 }
 
@@ -88,7 +106,19 @@ ion-list {
   }
   
   ion-content.background{
-    --background: url(../../assets/bg.jpg) 0 60px no-repeat;
+    --background: url(../../assets/bg.jpg) 0 70px/100% 100% no-repeat;
 }
   
-  
+.points{
+  font-size: 30px;
+  font-weight: bolder;
+  color: #E12A2A;
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+  margin-top: 20px;
+}
+
+.redtimer{
+  color: #E12A2A;
+}
