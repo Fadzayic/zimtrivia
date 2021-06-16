@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Card } from '../models/card';
+import { ScoresService } from '../services/scores.service';
 
 const circleR = 80;
 const circleDasharray = 2 * Math.PI * circleR;
@@ -29,6 +30,7 @@ export class HomePage {
   noCards: boolean = false;
   score = 0;
   timeup: boolean = false;
+  noTime: boolean = false;
   whenClicked = [false, false, false, false];
 
   time: BehaviorSubject<string> = new BehaviorSubject('00:00');
@@ -46,7 +48,8 @@ export class HomePage {
   constructor(
     private router: Router,
     private firestore: AngularFirestore,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private scoresService: ScoresService
   ) {}
 
   ionViewWillEnter() {
@@ -116,7 +119,9 @@ export class HomePage {
     if (this.timer < 0) {
       // this.startTimer(this.startDuration);
       this.stopTimer();
-      this.router.navigate(['/time-out']);
+      this.noTime = true;
+
+      // this.router.navigate(['/time-out']);
     }
 
     if (this.timer < 5) {
@@ -239,7 +244,9 @@ export class HomePage {
   }
 
   public addScore(): any {
+    if ( this.score < 50 ) {
     this.score = this.score + 10;
+    }
 
  }
 

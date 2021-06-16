@@ -20,23 +20,26 @@
 .timer {
   position: relative;
   // top:z   -50px;
-  left: 20%;
+  // left: 20%;
 }
-#progress-circle {
+.progress-circle {
   margin-top: 50px;
   transform: rotate(-90deg);
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .timer-text {
   transform: rotate(90deg);
   transform-origin: center;
-  font-size: 48px;
+  font-size: 50px;
   text-anchor: middle;
   font-weight: 600;
-  fill: #333;
+  color: #333;
 }
 .redtimer{
-  fill: #E12A2A;
+  color: #E12A2A;
   animation: blinker 1.5s linear infinite;
 }
 
@@ -106,7 +109,7 @@ ion-list {
   }
   
   ion-content.background{
-    --background: url(../../assets/bg.jpg) 0 70px/100% 100% no-repeat;
+    --background: url(../../assets/bg.jpg) 0 0px/100% 100% no-repeat;
 }
   
 .points{
@@ -119,6 +122,96 @@ ion-list {
   margin-top: 20px;
 }
 
+.tap{
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+  color: #333;
+}
+
 .redtimer{
   color: #E12A2A;
 }
+
+
+ion-content {
+  width: 100vw;
+  position: absolute;
+  -background: #000;
+
+  .heading {
+    position: relative;
+    top: 50%;
+    text-align: center;
+
+    .center{
+        margin: auto;
+    }
+  }
+}
+ion-content h1 {
+//   background-color: #E42256;
+  margin: -5px 0px 0px 0px;
+  padding: 0px;
+  color: rgb(97, 97, 97);
+  text-align: center;
+  font-size: 40px;
+  text-transform: uppercase
+}
+
+#loader {
+  animation: loader 5s cubic-bezier(.8,0,.2,1) infinite;
+  height: 40px;
+  width: 41px;
+  position: absolute;
+  top:calc(50% - 20px);
+  left:calc(50% - 20px);
+}
+@keyframes loader {
+  90% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+#top {
+  animation: top 5s linear infinite;
+  border-top: 20px solid #E12A2A;
+  border-right: 20px solid transparent;
+  border-left: 20px solid transparent;
+  height: 0px;
+  width: 1px;
+  transform-origin: 50% 100%;
+}
+@keyframes top {
+  90% { transform: scale(0); }
+  100% { transform: scale(0);}
+}
+#bottom {
+  animation: bottom 5s linear infinite;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #E12A2A;
+  border-left: 20px solid transparent;
+  height: 0px;
+  width: 1px;
+  transform: scale(0);
+  transform-origin: 50% 100%;
+}
+@keyframes bottom {
+  10% { transform: scale(0); }
+  90% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+#line {
+  animation: line 5s linear infinite;
+  border-left: 1px dotted #E12A2A;
+  height: 0px;
+  width: 0px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+@keyframes line {
+  10% { height: 20px; }
+  100% { height: 20px; }
+}
+
+
+

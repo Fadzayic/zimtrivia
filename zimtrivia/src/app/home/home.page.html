@@ -1,87 +1,140 @@
-<ion-header>
-  <ion-toolbar class="header">
-    <ion-buttons slot="start">
-      <ion-menu-button autoHide="false"></ion-menu-button>
-    </ion-buttons>
-    <!-- <ion-title class="ion-text-center light-text header-title">TRIVIA</ion-title> -->
-    <img class="logo" src="../../assets/logo.jpg" />
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="background">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large"> ZimTrivia </ion-title>
+<div *ngIf="!noTime">
+  <ion-header>
+    <ion-toolbar class="header">
+      <ion-buttons slot="start">
+        <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
+      <img class="logo" src="../../assets/logo.jpg" />
     </ion-toolbar>
   </ion-header>
 
-  <div class="list-ul gradient-border">
-    <div *ngIf="!loading && timerStarted">
-    <ion-list >
-      <div *ngFor="let item of records; let i = index;trackBy: tracked" lines="none" class="ion-text-center list-items" (click)="addScore(); whenClicked[i]=!whenClicked[i];" [style.background-color] = "whenClicked[i]  ? 'green' : 'white'" [style.color]="whenClicked[i]  ? 'white' : 'black'">{{item.answer}}</div>
-    </ion-list>
-  </div>
-  </div>
-  <br />
-  <div class="points" *ngIf="!loading && timerStarted">Points: {{score}}</div>
+  <ion-content [fullscreen]="true" class="background">
+    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-  <ion-row class="align-items-center timer">
-    <svg id="progress-circle" width="30vh" height="30vh" viewBox="0 0 200 200">
-      <linearGradient id="linearColors1" x1="0" y1="0" x2="1" y2="1">
-        <!-- <stop offset=0% stop-color="#FFB4B4"></stop>
-    <stop offset=100% stop-color="#E12A2A"></stop> -->
-        <!-- <stop offset="0%" stop-color="#fff"></stop>
-        <stop offset="100%" stop-color="#fff"></stop> -->
-      </linearGradient>
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large"> ZimTrivia </ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <!-- <circle
-    cx="50%"
-    cy="50%"
-    [attr.r]="circleR"
-    fill="none"
-    stroke="#f3f3f3"
-    stroke-width="12"
-/> -->
+    <div class="list-ul gradient-border">
+      <div *ngIf="!loading && timerStarted">
+        <ion-list>
+          <div
+            *ngFor="let item of records; let i = index;trackBy: tracked"
+            lines="none"
+            class="ion-text-center list-items"
+            (click)="addScore(); whenClicked[i]=!whenClicked[i];"
+            [style.background-color]="whenClicked[i]  ? 'green' : 'white'"
+            [style.color]="whenClicked[i]  ? 'white' : 'black'"
+          >
+            {{item.answer}}
+          </div>
+        </ion-list>
+      </div>
+    </div>
+    <br />
+    <p class="tap" *ngIf="!loading && timerStarted">Tap on answer if correct</p>
+    <div class="points" *ngIf="!loading && timerStarted">Points: {{score}}</div>
 
-      <circle
-        cx="50%"
-        cy="50%"
-        [attr.r]="circleR"
-        fill="none"
-        
-        stroke-width="12"
-      />
+    <ion-row class="align-items-center timer">
+      <div class="progress-circle">
+      <div x="50%" y="55%" class="timer-text" [class.redtimer]="timeup">
+        {{ time | async }}
+      </div>
+    </div>
+      <!-- <svg
+        id="progress-circle"
+        width="30vh"
+        height="10vh"
+        viewBox="0 0 200 200"
+      >
+        <linearGradient
+          id="linearColors1"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+        ></linearGradient>
+        <circle
+          cx="50%"
+          cy="50%"
+          [attr.r]="circleR"
+          fill="none"
+          stroke-width="12"
+        />
 
-      <circle
-        cx="50%"
-        cy="50%"
-        [attr.r]="circleR"
-        fill="none"
-        stroke="url(#linearColors1)"
-        stroke-width="12"
-        stroke-linecap="round"
-        [attr.stroke-dasharray]="circleDasharray"
-        [attr.stroke-dashoffset]="percentageOffset(percent | async)"
-      />
-      <text x="50%" y="55%" class="timer-text" [class.redtimer] = "timeup">{{ time | async }}</text>
-    </svg>
-  </ion-row>
-  
-  <h1 *ngIf="!!loading && !timerStarted"  class="ion-text-center">{{message}}</h1>
-  <ion-button
-    *ngIf="!loading"
-    expand="block"
-    color="success"
-    class="btn-teal"
-    (click)="startTimer(startDuration)"
-    >START</ion-button
-  >
-  
-  <ion-button *ngIf="noCards == true" expand="block" color="success" (click)="refreshGame()" >start a new game</ion-button>
-</ion-content>
+        <circle
+          cx="50%"
+          cy="50%"
+          [attr.r]="circleR"
+          fill="none"
+          stroke="url(#linearColors1)"
+          stroke-width="12"
+          stroke-linecap="round"
+          [attr.stroke-dasharray]="circleDasharray"
+          [attr.stroke-dashoffset]="percentageOffset(percent | async)"
+        />
+        <text x="50%" y="55%" class="timer-text" [class.redtimer]="timeup">
+          {{ time | async }}
+        </text>
+      </svg> -->
+    </ion-row>
 
-<ion-footer> </ion-footer>
+    <h2 *ngIf="!!loading && !timerStarted" class="ion-text-center">
+      {{message}}
+    </h2>
+    <ion-button
+      *ngIf="!loading"
+      expand="block"
+      color="success"
+      class="btn-teal"
+      (click)="startTimer(startDuration)"
+      >START</ion-button
+    >
+
+    <ion-button
+      *ngIf="noCards == true"
+      expand="block"
+      color="success"
+      (click)="refreshGame()"
+      >start a new game</ion-button
+    >
+  </ion-content>
+
+  <ion-footer> </ion-footer>
+</div>
+
+<!-- TIME OUT SECTION -->
+<ion-app class="timeupsection" *ngIf="noTime">
+  <ion-header>
+    <ion-toolbar class="header">
+      <ion-buttons slot="start">
+        <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
+      <img class="logo" src="../../assets/logo.jpg" />
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="background">
+    <div id="loader">
+      <div id="top"></div>
+      <div id="bottom"></div>
+      <div id="line"></div>
+    </div>
+    <br />
+    <br />
+
+    <div class="heading">
+      <div class="ion-text-center center">
+        <h1>Time up!</h1>
+        <div class="points">Points earned: {{score}}</div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-footer>
+    <ion-button expand="block" color="success" [routerLink]="['/play']">PLAY</ion-button>
+  </ion-footer>
+</ion-app>
