@@ -69,9 +69,8 @@
       <text x="50%" y="55%" class="timer-text">{{ time | async }}</text>
     </svg>
   </ion-row>
-  <h1 *ngIf="!!loading" class="ion-text-center">{{message}}</h1>
+  <h1 *ngIf="!!loading && timerStarted"  class="ion-text-center">{{message}}</h1>
   <ion-button
-    
     expand="block"
     color="success"
     class="btn-teal"

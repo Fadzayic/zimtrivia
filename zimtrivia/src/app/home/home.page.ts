@@ -52,7 +52,7 @@ export class HomePage {
   ionViewDidEnter() {
     console.log('ionViewDidEnter event');
     this.loading = true;
-    this.message = 'Loading card...';
+    // this.message = 'Loading card...';
     this.timerStarted = false;
     this.countAnswers();
     if (this.counterAnswers) {
