@@ -8,9 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="background">
-
   <div id="loader">
     <div id="top"></div>
     <div id="bottom"></div>
@@ -20,10 +18,13 @@
 
   <ion-row class="heading">
     <div class="ion-text-center center">
-<h1>Time up!</h1>
-</div>
-</ion-row>
+      <h1>Time up!</h1>
+    </div>
+  </ion-row>
 
+  <div>Points earned: </div>
 </ion-content>
 
-  <ion-button expand="block" color="success" [routerLink]="['/home']">PLAY</ion-button>
+<ion-button expand="block" color="success" [routerLink]="['/play']"
+  >PLAY</ion-button
+>

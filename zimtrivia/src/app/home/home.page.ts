@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Card } from '../models/card';
+import { ScoresService } from '../services/scores.service';
 
 const circleR = 80;
 const circleDasharray = 2 * Math.PI * circleR;
@@ -27,6 +28,10 @@ export class HomePage {
   timerStarted: boolean = false;
   counterAnswers: number = 0;
   noCards: boolean = false;
+  score = 0;
+  timeup: boolean = false;
+  noTime: boolean = false;
+  whenClicked = [false, false, false, false];
 
   time: BehaviorSubject<string> = new BehaviorSubject('00:00');
   percent: BehaviorSubject<number> = new BehaviorSubject(100);
@@ -43,7 +48,8 @@ export class HomePage {
   constructor(
     private router: Router,
     private firestore: AngularFirestore,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private scoresService: ScoresService
   ) {}
 
   ionViewWillEnter() {
@@ -52,7 +58,7 @@ export class HomePage {
   ionViewDidEnter() {
     console.log('ionViewDidEnter event');
     this.loading = true;
-    this.message = 'Loading card...';
+    // this.message = 'Loading card...';
     this.timerStarted = false;
     this.countAnswers();
     if (this.counterAnswers) {
@@ -73,9 +79,11 @@ export class HomePage {
     this.timerStarted = true;
     this.timer = duration * 35;
     this.updateTimeValue();
-    this.interval = setInterval(() => {
-      this.updateTimeValue();
-    }, 1000);
+    setTimeout(() => {
+      this.interval = setInterval(() => {
+        this.updateTimeValue();
+      }, 1000);
+ }, 2000);
   }
 
   stopTimer() {
@@ -111,7 +119,14 @@ export class HomePage {
     if (this.timer < 0) {
       // this.startTimer(this.startDuration);
       this.stopTimer();
-      this.router.navigate(['/time-out']);
+      this.noTime = true;
+
+      // this.router.navigate(['/time-out']);
+    }
+
+    if (this.timer < 5) {
+      this.timeup = true;
+      console.log('timer is less than 5');
     }
   }
 
@@ -227,4 +242,15 @@ export class HomePage {
         });
     });
   }
+
+  public addScore(): any {
+    if ( this.score < 50 ) {
+    this.score = this.score + 10;
+    }
+
+ }
+
+ tracked(item, index){
+  return index;
+}
 }
