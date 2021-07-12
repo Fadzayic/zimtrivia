@@ -7,6 +7,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Card } from '../models/card';
 import { ScoresService } from '../services/scores.service';
 
+
 const circleR = 80;
 const circleDasharray = 2 * Math.PI * circleR;
 export interface record {
@@ -254,3 +255,6 @@ export class HomePage {
   return index;
 }
 }
+
+
+
