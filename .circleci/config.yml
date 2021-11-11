@@ -6,31 +6,31 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   
-  semgrep-scan:
-    parameters:
-      repo_path:
-        type: string
-        default: Fadzayic/zimtrivia
-      default_branch:
-        type: string
-        default: master
-    environment:
-      SEMGREP_RULES: >- # more at semgrep.dev/explore
-        p/security-audit
-        p/secrets
-        p/jwt
+  # semgrep-scan:
+  #   parameters:
+  #     repo_path:
+  #       type: string
+  #       default: Fadzayic/zimtrivia
+  #     default_branch:
+  #       type: string
+  #       default: master
+  #   environment:
+  #     SEMGREP_RULES: >- # more at semgrep.dev/explore
+  #       p/security-audit
+  #       p/secrets
+  #       p/jwt
 
-      # Scan changed files in PRs, block on new issues only (existing issues ignored)
-      SEMGREP_BASELINE_REF: << parameters.default_branch >>
-    docker:
-      - image: returntocorp/semgrep-agent:v1
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Semgrep scan"
-          command: semgrep-agent
+  #     # Scan changed files in PRs, block on new issues only (existing issues ignored)
+  #     SEMGREP_BASELINE_REF: << parameters.default_branch >>
+  #   docker:
+  #     - image: returntocorp/semgrep-agent:v1
+  #   # Add steps to the job
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: "Semgrep scan"
+  #         command: semgrep-agent
   build:
     docker:
       - image: circleci/python
@@ -38,6 +38,7 @@ jobs:
       - checkout
       - run: python -m pip install semgrep
       - run: semgrep --config s/d2WE
+        
 
 
 # Invoke jobs via workflows
@@ -45,6 +46,6 @@ jobs:
 workflows:
   master:
     jobs:
-      - semgrep-scan
+      # - semgrep-scan
       - build
 
