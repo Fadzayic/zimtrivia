@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   config: {
+    apiKey: "AIzaSyD90b0H3PwHKS1bv3VP54mjd55rWxYchnE",
     authDomain: "zimtrivia.firebaseapp.com",
     databaseURL: "https://zimtrivia-default-rtdb.firebaseio.com",
     projectId: "zimtrivia",
