@@ -13,4 +13,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: returntocorp/semgrep-action@v1
       with:
+        config: s/d2WE
         publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
