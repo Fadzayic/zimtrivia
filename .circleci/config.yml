@@ -47,4 +47,3 @@ workflows:
     jobs:
       - semgrep-scan
       - build
-
