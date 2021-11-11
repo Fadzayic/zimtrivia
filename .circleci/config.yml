@@ -5,17 +5,22 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-  semgrep-scan:
+ semgrep-scan:
     parameters:
       repo_path:
         type: string
-        default: myorg/semgrep-test-repo
+        default: Fadzayic/zimtrivia
       default_branch:
         type: string
-        default: main
+        default: master
+    environment:
+      SEMGREP_RULES: >- # more at semgrep.dev/explore
+        p/security-audit
+        p/secrets
+
+      # Scan changed files in PRs, block on new issues only (existing issues ignored)
+      SEMGREP_BASELINE_REF: << parameters.default_branch >>
+    
     docker:
       - image: cimg/base:stable
       - image: returntocorp/semgrep-agent:v1
@@ -24,12 +29,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Semgrep scan"
+          command: semgrep-agent
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  main:
     jobs:
-      - say-hello
+      - semgrep-scan
