@@ -22,7 +22,6 @@ jobs:
       SEMGREP_BASELINE_REF: << parameters.default_branch >>
     
     docker:
-      - image: cimg/base:stable
       - image: returntocorp/semgrep-agent:v1
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -35,6 +34,6 @@ jobs:
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  main:
+  master:
     jobs:
       - semgrep-scan
