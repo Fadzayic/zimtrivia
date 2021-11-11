@@ -5,13 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
-    docker:
-      - image: circleci/python
-    steps:
-      - checkout
-      - run: python -m pip install semgrep
-      - run: semgrep --config s/vqNY /your/code
+  
   semgrep-scan:
     parameters:
       repo_path:
@@ -28,7 +22,6 @@ jobs:
 
       # Scan changed files in PRs, block on new issues only (existing issues ignored)
       SEMGREP_BASELINE_REF: << parameters.default_branch >>
-    
     docker:
       - image: returntocorp/semgrep-agent:v1
     # Add steps to the job
@@ -38,7 +31,13 @@ jobs:
       - run:
           name: "Semgrep scan"
           command: semgrep-agent
-
+  build:
+    docker:
+      - image: circleci/python
+    steps:
+      - checkout
+      - run: python -m pip install semgrep
+      - run: semgrep --config s/vqNY /your/code
 
 
 # Invoke jobs via workflows
@@ -47,4 +46,5 @@ workflows:
   master:
     jobs:
       - semgrep-scan
+      - build
 
