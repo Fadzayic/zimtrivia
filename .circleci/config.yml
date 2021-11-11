@@ -37,7 +37,7 @@ jobs:
     steps:
       - checkout
       - run: python -m pip install semgrep
-      - run: semgrep --config s/vqNY /your/code
+      - run: semgrep --config s/vqNY
 
 
 # Invoke jobs via workflows
