@@ -47,5 +47,5 @@ workflows:
   master:
     jobs:
       # - semgrep-scan
-      - build
+      - build 
 
