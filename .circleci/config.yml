@@ -6,32 +6,32 @@ version: 2.1
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   
-  semgrep-scan:
-    parameters:
-      repo_path:
-        type: string
-        default: Fadzayic/zimtrivia
-      default_branch:
-        type: string
-        default: master
-    environment:
-      SEMGREP_RULES: >- # more at semgrep.dev/explore
-        p/security-audit
-        p/secrets
-        p/jwt
+  # semgrep-scan:
+  #   parameters:
+  #     repo_path:
+  #       type: string
+  #       default: Fadzayic/zimtrivia
+  #     default_branch:
+  #       type: string
+  #       default: master
+  #   environment:
+  #     SEMGREP_RULES: >- # more at semgrep.dev/explore
+  #       p/security-audit
+  #       p/secrets
+  #       p/jwt
 
-      # Scan changed files in PRs, block on new issues only (existing issues ignored)
-      SEMGREP_BASELINE_REF: << parameters.default_branch >>
-    docker:
-      - image: returntocorp/semgrep-agent:v1
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Semgrep scan"
-          command: semgrep-agent
-  build:
+  #     # Scan changed files in PRs, block on new issues only (existing issues ignored)
+  #     SEMGREP_BASELINE_REF: << parameters.default_branch >>
+  #   docker:
+  #     - image: returntocorp/semgrep-agent:v1
+  #   # Add steps to the job
+  #   # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: "Semgrep scan"
+  #         command: semgrep-agent
+  semgrep-scan:
     docker:
       - image: circleci/python
     steps:
@@ -46,5 +46,5 @@ workflows:
   master:
     jobs:
       - semgrep-scan
-      - build
+      # - build
 
