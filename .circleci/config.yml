@@ -32,6 +32,13 @@ jobs:
   #         name: "Semgrep scan"
   #         command: semgrep-agent
   semgrep-scan:
+    parameters:
+      repo_path:
+        type: string
+        default: Fadzayic/zimtrivia
+      default_branch:
+        type: string
+        default: master
     docker:
       - image: circleci/python
     steps:
