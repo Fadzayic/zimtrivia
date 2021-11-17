@@ -14,4 +14,4 @@ jobs:
     - uses: returntocorp/semgrep-action@v1
       with:
         config: s/d2WE
-        publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
+        publishToken: ${{ secrets.dc89cccc1cf9f8bf9fc6c1c1c18981843d0dc9e61d9ef070f7ace9eab5ddf58e }}
